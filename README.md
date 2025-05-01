@@ -5,29 +5,21 @@ This Terraform configuration provisions an AWS RDS MariaDB infrastructure for th
 ## 🚀 Features
 
 - **MariaDB RDS Instance**: Primary database for the Snackbar application
-- **VPC Infrastructure**: Secure network environment with public and private subnets
 - **Security Groups**: Controlled access to the database instance
 - **Parameter Group**: Optimized database settings for the application
 - **CloudWatch Integration**: Monitoring and alerts for database operations
 - **Terraform Provisioning**: Infrastructure-as-Code (IaC) for repeatable deployments
-- **VPC Endpoints**: Secure AWS service access without internet exposure
 
 ## 📐 Architecture
 
 The RDS infrastructure follows this design:
 
-1. **Network Layer**
-   - VPC with public and private subnets across multiple availability zones
-   - Internet Gateway for outbound connectivity
-   - Route tables for traffic management
-   - VPC Endpoints for secure AWS service access
-
-2. **Database Layer**
+1. **Database Layer**
    - RDS MariaDB instance in private subnets
    - Security group restricting access to the database
    - Parameter group with optimized settings
 
-3. **Monitoring Layer**
+2. **Monitoring Layer**
    - CloudWatch alarms for CPU utilization
    - CloudWatch alarms for storage space
    - CloudWatch alarms for database connections
@@ -37,30 +29,20 @@ The RDS infrastructure follows this design:
 ```
 .
 ├── main.tf                 # Main RDS instance configuration
-├── dependencies.tf         # Network and security infrastructure
 ├── variables.tf            # Input variable definitions
 ├── outputs.tf              # Output value definitions
-├── locals.tf               # Local variable definitions
-├── providers.tf            # Provider configuration
-├── init.sh                 # Helper script for Terraform initialization
-└── terraform.tfvars        # Variable values for deployment
+├── backend.tf              # Backend and Provider configuration
 ```
 
 ## 🛠️ Terraform Resources
 
 | Resource Type | Purpose |
 |---------------|---------|
-| `aws_vpc` | Creates the virtual private cloud for the infrastructure |
-| `aws_subnet` | Creates public and private subnets for network segmentation |
-| `aws_internet_gateway` | Provides internet access for the VPC |
-| `aws_route_table` | Manages routing for the subnets |
 | `aws_security_group` | Controls access to the RDS instance |
 | `aws_db_subnet_group` | Groups subnets for RDS deployment |
 | `aws_db_parameter_group` | Configures database parameters |
 | `aws_db_instance` | Creates the MariaDB RDS instance |
 | `aws_cloudwatch_metric_alarm` | Sets up monitoring and alerts |
-| `aws_ssm_parameter` | Securely stores the database password |
-| `aws_vpc_endpoint` | Creates VPC endpoints for secure AWS service access |
 
 ## 🚀 Deployment
 
@@ -106,8 +88,8 @@ terraform destroy -var-file=terraform.tfvars -auto-approve
 
 After successful deployment, the following outputs are available:
 
-- **Endpoint**: `snackbar-db.cgoarquvtiir.us-east-1.rds.amazonaws.com:3306`
-- **Database Name**: `snackbar`
+- **Endpoint**: `snackbar-db.*.us-east-1.rds.amazonaws.com:3306`
+- **Database Name**: `snackbar-db`
 - **Username**: `admin`
 - **Password**: As specified in terraform.tfvars (securely stored in Parameter Store)
 

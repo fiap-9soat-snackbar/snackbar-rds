@@ -1,25 +1,8 @@
-variable "remote_state_bucket" {
-  description = "S3 bucket for storing Terraform remote state"
-  type        = string
-}
-
-variable "remote_state_key" {
-  description = "Key for Terraform remote state in S3 bucket"
-  type        = string
-}
-
-variable "remote_state_region" {
-  description = "Region of S3 bucket for Terraform remote state"
-  type        = string
+variable "bucket" {
+  type    = string
 }
 
 # RDS Variables
-variable "db_name" {
-  description = "Name of the database to create"
-  type        = string
-  default     = "snackbar"
-}
-
 variable "db_username" {
   description = "Username for the database"
   type        = string
@@ -30,6 +13,7 @@ variable "db_password" {
   description = "Password for the database (should be provided via environment variables)"
   type        = string
   sensitive   = true
+  default     = "minhasenha123"
 }
 
 variable "db_instance_class" {
