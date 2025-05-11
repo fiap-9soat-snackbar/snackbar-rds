@@ -26,7 +26,7 @@ resource "aws_db_instance" "mariadb" {
   backup_window                = "03:00-06:00"
   maintenance_window           = "Mon:00:00-Mon:03:00"
   auto_minor_version_upgrade   = true
-  deletion_protection          = true
+  deletion_protection          = false
   skip_final_snapshot          = var.db_skip_final_snapshot
   final_snapshot_identifier    = "${data.terraform_remote_state.global.outputs.project_name}-final-snapshot"
   
